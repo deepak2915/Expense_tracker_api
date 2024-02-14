@@ -5,6 +5,7 @@ const {ObjectId} = require('mongodb')
 const {connectToDb, getDb} = require('./dbconnection.cjs')
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 
 let db
@@ -13,9 +14,10 @@ connectToDb(function(error) {
         console.log('Could not establish connection...')
         console.log(error)
     } else { // if no error in establishing connection
-        app.listen(8000)
+        port=process.env.PORT || 8000
+        app.listen(port)
         db = getDb()
-        console.log('Listening on port 8000...')
+        console.log(`Listening on port ${port}...`)
     }
 })
 
